@@ -2,11 +2,12 @@
 session_start();
 include('config.php');
 
-$fetchSession = mysqli_query($config,"SELECT * FROM login WHERE email='{$_SESSION['loggedInUser']}'");
+$fetchPoll = mysqli_query($config, "SELECT question, opt1, opt2, opt3, opt4 FROM admin LIMIT 1");
+$pollData = mysqli_fetch_assoc($fetchPoll);
 
-while ($row = mysqli_fetch_assoc($fetchSession)) {
-    $activeusername = $row['email'];
-}
+// while ($row = mysqli_fetch_assoc($fetchSession)) {
+    // $activeusername = $row['email'];
+// }
 
 ?>
 <!DOCTYPE html>
@@ -38,48 +39,49 @@ while ($row = mysqli_fetch_assoc($fetchSession)) {
     <link rel="stylesheet" href="colorswitcher/assets/css/colorswitcher.css">
 </head>
 <body>
-                <div style="float: right; display: flex; align-items: center;">
-                    <h5><?php echo $_SESSION["loggedInUser"] ?></h5>
+                <div style="float: right; display: flex; align-items: center; font-weight: 200px;">
+                    <h5> <?php echo $_SESSION["loggedInUser"] ?></h5>
                     <img style="width: 60px; padding: 10px;" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png">     
 
                     
                 </div>
 
+               
+
     <main class="overflow-hidden">
         <div class="container">
             <div class="wrapper popreveal">
                 <div class="main-heading">
-                    What Programming Language do You use  During the Coding interview?
+                   <?php echo isset($pollData['question']) ? $pollData['question'] : 'No question found'; ?>
                 </div>
                 
                 <div class="pole-form">
 
                     <!-- form -->
-                    <form class="show-section" id="steps" method="post">
+                    <form class="show-section" id="steps" method="POST">
 
 
-                        <!-- step 1 -->
                         <fieldset id="step1" class="fields">
                             <div class="radiofield">
-                                <input type="radio" name="opt1" value="Python">
-                                <label>Python</label>
+                                <input type="radio" name="opt" value="Option 1">
+                                <label><?php echo isset($pollData['opt1']) ? $pollData['opt1'] : ''; ?></label>
                             </div>
                             <div class="radiofield delay-100ms">
-                                <input type="radio" name="opt1" value="Javascript">
-                                <label>Javascript</label>
+                                <input type="radio" name="opt2" value="Option 2">
+                                <label><?php echo isset($pollData['opt2']) ? $pollData['opt2'] : ''; ?></label>
                             </div>
                             <div class="radiofield delay-200ms">
-                                <input type="radio" name="opt1" value="Go">
-                                <label>Go</label>
+                                <input type="radio" name="opt3" value="Option 3">
+                                <label><?php echo isset($pollData['opt3']) ? $pollData['opt3'] : ''; ?></label>
                             </div>
                             <div class="radiofield delay-300ms">
-                                <input type="radio" name="opt1" value="PHP">
-                                <label>PHP</label>
+                                <input type="radio" name="opt4" value="Option 4">
+                                <label><?php echo isset($pollData['opt4']) ? $pollData['opt4'] : ''; ?></label>
                             </div>
                             
                             <!-- next btn -->
                             <div class="next_prev">
-                                <button type="button" class="next" id="sub">
+                                <button type="submit" name="vote" class="next" id="sub">
                                     <span>Vote Now</span>
                                 </button>
                             </div>
@@ -192,3 +194,28 @@ while ($row = mysqli_fetch_assoc($fetchSession)) {
         <script src="assets/js/callswitcher.js"></script>
 </body>
 </html>
+
+<?php 
+ 
+if(isset($_POST['vote']))
+{
+  $eml = $_SESSION['loggedInUser']; 
+  $voteOption = $_POST['opt']; 
+
+  $checkEntry = mysqli_query($config,"SELECT * FROM votes WHERE voter = '$eml'");
+
+  if(mysqli_num_rows($checkEntry) > 0)
+  {
+    echo "<script>alert('Already Voted');</script>";
+    echo "<script>window.location.href='http://localhost/Poll/login/login.php';</script>";
+  }
+  else
+  {
+
+    mysqli_query($config,"INSERT INTO votes(voter, vote) VALUES('$eml', '$voteOption')");
+    echo "<script>alert('Vote Submitted');</script>";
+    echo "<script>window.location.href='http://localhost/Poll/login/login.php';</script>"; 
+  }
+}
+
+?>

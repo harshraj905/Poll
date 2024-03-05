@@ -64,8 +64,8 @@ while ($row = mysqli_fetch_assoc($fetchSession)) {
             </div>
             <div class="row g-0 my-auto">
               <div class="col-11 col-lg-10 mx-auto">
-                <h1 class="text-11 text-white mb-3">Welcome back!</h1>
-                <p class="text-5 text-white lh-base mb-4">Login to submit your vote.</p>
+                <h1 class="text-11 text-white mb-3">Admin's Login!</h1>
+                <p class="text-5 text-white lh-base mb-4">Login to create a poll.</p>
                 <a class="btn btn-dark rounded-pill shadow-none video-btn py-1 px-3 d-inline-flex align-items-center mb-5" href="#" data-src="https://www.youtube.com/embed/7e90gBu4pas" data-bs-toggle="modal" data-bs-target="#videoModal"><span class="me-2 text-7"><i class='bx bx-play-circle' ></i></span>Watch demo</a> </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ if(isset($_POST['login']))
         session_start();
 
         $_SESSION['loggedInUser'] = $eml;
-       echo "<script>window.location.href='../index.php'</script>";
+       echo "<script>window.location.href='../admin.php'</script>";
     }
     else
     {
