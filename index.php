@@ -39,9 +39,12 @@ $pollData = mysqli_fetch_assoc($fetchPoll);
     <link rel="stylesheet" href="colorswitcher/assets/css/colorswitcher.css">
 </head>
 <body>
+                
+
+
                 <div style="float: right; display: flex; align-items: center; font-weight: 200px;">
                     <h5> <?php echo $_SESSION["loggedInUser"] ?></h5>
-                    <img style="width: 60px; padding: 10px;" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png">     
+                    <a href="http://localhost/Poll/results.php"><img style="width: 60px; padding: 10px;" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"></a>
 
                     
                 </div>
@@ -63,19 +66,19 @@ $pollData = mysqli_fetch_assoc($fetchPoll);
 
                         <fieldset id="step1" class="fields">
                             <div class="radiofield">
-                                <input type="radio" name="opt" value="Option 1">
+                                <input type="radio" name="opt" value="1">
                                 <label><?php echo isset($pollData['opt1']) ? $pollData['opt1'] : ''; ?></label>
                             </div>
                             <div class="radiofield delay-100ms">
-                                <input type="radio" name="opt2" value="Option 2">
+                                <input type="radio" name="opt" value="2">
                                 <label><?php echo isset($pollData['opt2']) ? $pollData['opt2'] : ''; ?></label>
                             </div>
                             <div class="radiofield delay-200ms">
-                                <input type="radio" name="opt3" value="Option 3">
+                                <input type="radio" name="opt" value="3">
                                 <label><?php echo isset($pollData['opt3']) ? $pollData['opt3'] : ''; ?></label>
                             </div>
                             <div class="radiofield delay-300ms">
-                                <input type="radio" name="opt4" value="Option 4">
+                                <input type="radio" name="opt" value="4">
                                 <label><?php echo isset($pollData['opt4']) ? $pollData['opt4'] : ''; ?></label>
                             </div>
                             
@@ -88,6 +91,43 @@ $pollData = mysqli_fetch_assoc($fetchPoll);
                         </fieldset>
                     </form>
                 </div>
+
+
+                <!-- Vote calculation starts-->
+                <?php
+                $options = ["1", "2", "3", "4"];
+$voteCounts = [];
+$totalVotes = 0;
+
+foreach ($options as $option) {
+    $query = mysqli_prepare($config, "SELECT COUNT(*) as voteCount FROM votes WHERE vote = ?");
+    mysqli_stmt_bind_param($query, "s", $option);
+    mysqli_stmt_execute($query);
+    $result = mysqli_stmt_get_result($query);
+    $row = mysqli_fetch_assoc($result);
+    
+    $voteCounts[$option] = $row['voteCount'];
+    $totalVotes += $row['voteCount'];
+}
+
+$votePercentages = [];
+foreach ($voteCounts as $option => $count) {
+    $percentage = ($totalVotes > 0) ? ($count / $totalVotes) * 100 : 0;
+    $votePercentages[$option] = $percentage;
+}
+
+$_SESSION['votePercentages'] = $votePercentages;
+
+// Redirect to the page where you want to display the results
+// header('Location: results.php');
+// exit();
+
+// foreach ($votePercentages as $option => $percentage) {
+    // echo $option . ': ' . number_format($percentage, 2) . '%<br>';
+    
+// }
+?>
+                <!-- Vote calculation ends -->
 
                 <!-- footer  -->
                 <footer>
@@ -116,42 +156,42 @@ $pollData = mysqli_fetch_assoc($fetchPoll);
         <div class="container">
             <div class="wrapper popreveal">
                 <div class="main-heading">
-                    What Programming Language do You use  During the Coding interview?
+                    <?php echo isset($pollData['opt1']) ? $pollData['question'] : ''; ?>
                 </div>
                 <div class="pole-form">
                     <div class="thankyou">
                         <div class="result opt1">
                             <div class="prnct">15%</div>
                             <div class="bar">
-                                <label>Python</label>
+                                <label><?php echo isset($pollData['opt1']) ? $pollData['opt1'] : ''; ?></label>
                                 <div class="prnct-bar"></div>
                             </div>
                         </div>
                         <div class="result opt2">
                             <div class="prnct">15%</div>
                             <div class="bar">
-                                <label>Javascript</label>
+                                <label><?php echo isset($pollData['opt1']) ? $pollData['opt2'] : ''; ?></label>
                                 <div class="prnct-bar"></div>
                             </div>
                         </div>
                         <div class="result opt3">
                             <div class="prnct">10%</div>
                             <div class="bar">
-                                <label>Go</label>
+                                <label><?php echo isset($pollData['opt1']) ? $pollData['opt3'] : ''; ?></label>
                                 <div class="prnct-bar"></div>
                             </div>
                         </div>
                         <div class="result opt4">
                             <div class="prnct">60%</div>
                             <div class="bar">
-                                <label>PHP</label>
+                                <label><?php echo isset($pollData['opt1']) ? $pollData['opt4'] : ''; ?></label>
                                 <div class="prnct-bar"></div>
                             </div>
                         </div>
                     </div>
                     <div class="next_prev">
-                        <button id="goback" type="button" class="next">
-                            <span>Undo?</span>
+                        <button id="goback" type="submit" class="next">
+                            <span>Submit</span>
                         </button>
                     </div>
                 </div>
@@ -214,7 +254,8 @@ if(isset($_POST['vote']))
 
     mysqli_query($config,"INSERT INTO votes(voter, vote) VALUES('$eml', '$voteOption')");
     echo "<script>alert('Vote Submitted');</script>";
-    echo "<script>window.location.href='http://localhost/Poll/login/login.php';</script>"; 
+    echo "<script>window.location.href='http://localhost/Poll/results.php';</script>";
+    // echo "<script>window.location.href='http://localhost/Poll/login/login.php';</script>"; 
   }
 }
 

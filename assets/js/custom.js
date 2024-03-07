@@ -122,7 +122,7 @@ $(document).ready(function()
                 setTimeout(function () {
                     el.children().remove('.reveal');
                 }, 3000);
-                }($('#error').append('<div class="reveal alert alert-danger">Choose an option!</div>')));
+                }($('#error').append('<div class="reveal alert alert-danger">Please choose an option!</div>')));
                 
                 radiovalidate(1);
 
@@ -131,98 +131,101 @@ $(document).ready(function()
             else
             {
 
-                // $(document).ready(function()
-                // {
-                //     var totalprcnt = 0;
-                //     var op1 = 0, op2 = 0, op3 = 0, op4 = 0;
-                //     var totalfield = $('fieldset').length;
-                //     console.log(totalfield);
-
-                //     $('fieldset input').each(function()
-                //         {
-                //             if($(this).val() == 'Python')
-                //             {
-                //                 $(this).addClass('op1');
-                //             }
-                //             else if($(this).val() == 'Javascript')
-                //             {
-                //                 $(this).addClass('op2');
-                //             }
-                //             else if($(this).val() == 'Go')
-                //             {
-                //                 $(this).addClass('op3');
-                //             }
-                //             else
-                //             {
-                //                 $(this).addClass('op4');
-                //             }
-                //         })
+            // PERCENTAGE CALCULATION STARTS
 
 
-                //         // checkoption 1
-                //         $('.op1').each(function()
-                //         {
-                //             if($(this).is(':checked'))
-                //             {
-                //                 op1 = op1 + 1;
-                //             } 
-                //         })
+                $(document).ready(function()
+                {
+                    var totalprcnt = 0;
+                    var op1 = 0, op2 = 0, op3 = 0, op4 = 0;
+                    var totalfield = $('fieldset').length;
+                    console.log(totalfield);
 
-                //         totalprcnt = (op1/totalfield) *100;
-                //         console.log(totalprcnt);
-                //         $('.opt1 .prnct-bar').css({width: totalprcnt+'%'})
-                //         value = Math.trunc( totalprcnt );
-                //         $('.opt1 .prnct').html(value +'%');
+                    $('fieldset input').each(function()
+                        {
+                            if($(this).val() == 'Option 1')
+                            {
+                                $(this).addClass('op1');
+                            }
+                            else if($(this).val() == 'Option 2')
+                            {
+                                $(this).addClass('op2');
+                            }
+                            else if($(this).val() == 'Option 3')
+                            {
+                                $(this).addClass('op3');
+                            }
+                            else
+                            {
+                                $(this).addClass('op4');
+                            }
+                        })
 
 
-                //         // check option 2
-                //         $('.op2').each(function()
-                //         {
-                //             if($(this).is(':checked'))
-                //             {
-                //                 op2 = op2 + 1;
-                //             } 
-                //         })
+                        // checkoption 1
+                        $('.op1').each(function()
+                        {
+                            if($(this).is(':checked'))
+                            {
+                                op1 = op1 + 1;
+                            } 
+                        })
 
-                //         totalprcnt = (op2/totalfield) *100;
-                //         console.log(totalprcnt);
-                //         $('.opt2 .prnct-bar').css({width: totalprcnt+'%'})
-                //         value = Math.trunc( totalprcnt );
-                //         $('.opt2 .prnct').html(value +'%');
+                        totalprcnt = (op1/totalfield) *100;
+                        console.log(totalprcnt);
+                        $('.opt1 .prnct-bar').css({width: totalprcnt+'%'})
+                        value = Math.trunc( totalprcnt );
+                        $('.opt1 .prnct').html(value +'%');
 
-                //         // check option 3
-                //         $('.op3').each(function()
-                //         {
-                //             if($(this).is(':checked'))
-                //             {
-                //                 op3 = op3 + 1;
-                //             } 
-                //         })
 
-                //         totalprcnt = (op3/totalfield) *100;
-                //         console.log(totalprcnt);
-                //         $('.opt3 .prnct-bar').css({width: totalprcnt+'%'})
-                //         value = Math.trunc( totalprcnt );
-                //         $('.opt3 .prnct').html(value+ '%');
+                        // check option 2
+                        $('.op2').each(function()
+                        {
+                            if($(this).is(':checked'))
+                            {
+                                op2 = op2 + 1;
+                            } 
+                        })
 
-                //         // check option 4
-                //         $('.op4').each(function()
-                //         {
-                //             if($(this).is(':checked'))
-                //             {
-                //                 op4 = op4 + 1;
-                //             } 
-                //         })
+                        totalprcnt = (op2/totalfield) *100;
+                        console.log(totalprcnt);
+                        $('.opt2 .prnct-bar').css({width: totalprcnt+'%'})
+                        value = Math.trunc( totalprcnt );
+                        $('.opt2 .prnct').html(value +'%');
 
-                //         totalprcnt = (op4/totalfield) *100;
-                //         console.log(totalprcnt);
-                //         $('.opt4 .prnct-bar').css({width: totalprcnt+'%'})
-                //         value = Math.trunc( totalprcnt );
-                //         $('.opt4 .prnct').html(value+ '%');
+                        // check option 3
+                        $('.op3').each(function()
+                        {
+                            if($(this).is(':checked'))
+                            {
+                                op3 = op3 + 1;
+                            } 
+                        })
 
-                // })
+                        totalprcnt = (op3/totalfield) *100;
+                        console.log(totalprcnt);
+                        $('.opt3 .prnct-bar').css({width: totalprcnt+'%'})
+                        value = Math.trunc( totalprcnt );
+                        $('.opt3 .prnct').html(value+ '%');
 
-                
+                        // check option 4
+                        $('.op4').each(function()
+                        {
+                            if($(this).is(':checked'))
+                            {
+                                op4 = op4 + 1;
+                            } 
+                        })
+
+                        totalprcnt = (op4/totalfield) *100;
+                        console.log(totalprcnt);
+                        $('.opt4 .prnct-bar').css({width: totalprcnt+'%'})
+                        value = Math.trunc( totalprcnt );
+                        $('.opt4 .prnct').html(value+ '%');
+
+                })
+
+                // PERCENTAGE CALCULATION ENDS HERE
 
                             
                             $('.thankyoupage').css({display: 'block'})

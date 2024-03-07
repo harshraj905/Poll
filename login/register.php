@@ -57,7 +57,7 @@ include('../config.php');
               <div class="col-11 col-lg-10 mx-auto">
                 <h1 class="text-11 text-white mb-3">You're new here!</h1>
                 <p class="text-5 text-white lh-base mb-4">Sign up with your email and personal details to get started!</p>
-                <a class="btn btn-dark rounded-pill shadow-none video-btn py-1 px-3 d-inline-flex align-items-center mb-5" href="#" data-src="https://www.youtube.com/embed/7e90gBu4pas" data-bs-toggle="modal" data-bs-target="#videoModal"><span class="me-2 text-7"><i class='bx bx-play-circle' ></i></span>Watch demo</a> </div>
+                <a class="btn btn-dark rounded-pill shadow-none video-btn py-1 px-3 d-inline-flex align-items-center mb-5" href="#" data-src="#" data-bs-toggle="modal" data-bs-target="#videoModal"><span class="me-2 text-7"><i class='bx bx-play-circle' ></i></span>Watch demo</a> </div>
             </div>
           </div>
         </div>
